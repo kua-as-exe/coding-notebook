@@ -3,7 +3,14 @@
 
 using namespace std;
 
-#define queueColumns 4
+#define queueColumns  5
+#define delay 0.1 // seconds
+
+#define RES "\u001b[0m"
+#define RED "\u001b[31m"
+#define GRE "\u001b[32m"
+#define YEL "\u001b[33m"
+#define BRI_WHI "\u001b[37;1m"
 
 int m[5000][5000], curr, N, M;
 
@@ -13,97 +20,104 @@ struct node {
   int p;
 };
 
-queue < node > q;
+queue<node> q;
 
-// mode: "numerical" | map
-string mode = "map";
-/* string mode = "numerical"; */
-
-void printC(int t){
-  if( mode == "numerical" ){
-
-    if(t == 0){
-      cout << " . ";
-    }else{  
-      if (t < 10) cout << " ";
-      cout << t << " ";
-    }
-
-  }else if( mode == "map" ){
-    if(t == 0){
-      cout << ".";
-    }else{
-      cout << (t == curr ? "#": "-");
-    }
+void printC(int t) {
+  if (t == 0) {
     cout << " ";
+  } else if (t == -1) {
+    cout << BRI_WHI << "#" << RES;
+  } else {
+    if (t == curr) {
+      cout << YEL << "@" << RES;
+    } else {
+      string c = ".";
+      /* int c = (t-1)%9+1; */
+      /* char c = (t-1)%26 + 'a'; */
+      cout << GRE << c << RES;
+    }
   }
+  cout << " ";
 }
 
 void printQq(queue<node> &qq) {
-  if (!qq.empty()) {
-    node tt = qq.front();
-    printf("[ %2d, %2d ] ", tt.x, tt.y);
-    qq.pop();
-  }
+  node tt = qq.front();
+  printf(" [ %2d, %2d ]", tt.x, tt.y);
+  qq.pop();
 }
 
 void printX() {
+  int i, j, k;
   system("clear");
   cout << endl;
   queue<node> qq = q;
-  for (int i = 0; i < N; i++) {
-    for (int j = 0; j < M; j++)
+  for (i = 0; i < N; i++) {
+    for (j = 0; j < M; j++)
       printC(m[i][j]);
-    for(int k = 0; k < queueColumns; k++)
+
+    if (queueColumns > 0)
+      cout << "|";
+    for (k = 0; k < queueColumns && !qq.empty(); k++)
       printQq(qq);
+
     cout << endl;
   }
-  usleep(500000);
+  usleep(delay * 1000000);
 }
 
 void add(int x, int y, int p) {
-  if (x < 0 || x >= N)
+  if (x < 0 || x >= N || y < 0 || y >= M)
     return;
-  if (y < 0 || y >= M)
+  if (m[x][y] > 0 || m[x][y] == -1)
     return;
-  if (m[x][y] > 0)
-    return;
-  /* if(p > 10) return; */
 
   m[x][y] = p;
-  q.push({x, y, p+1});
+  q.push({x, y, p + 1});
 }
 
 int main() {
-  printX();
-  add(5, 5, 1);
-  add(N-8, N-3, 1);
-  add(N-3, 4, 1);
-  add(0, N-6, 1);
 
-  int i = 1;
-  while (q.size() != 0) {
+  cin >> N >> M;
+
+  char tchar;
+  for (int a = 0; a < N; a++) {
+    for (int b = 0; b < M; b++) {
+      cin >> tchar;
+      if (tchar == 'o') {
+        add(a, b, 1);
+      } else if (tchar == '#') {
+        m[a][b] = -1;
+      }
+    }
+  }
+
+  printX();
+
+  while (!q.empty()) {
     node t = q.front();
     q.pop();
 
-    if( t.p  > curr ){
+    if (t.p > curr) {
       printX();
       curr = t.p;
     }
 
-    add(t.x+1, t.y  , t.p);
-    add(t.x-1, t.y  , t.p);
-    add(t.x,   t.y-1, t.p);
-    add(t.x,   t.y+1, t.p);
+    add(t.x + 1, t.y, t.p);
+    add(t.x - 1, t.y, t.p);
+    add(t.x, t.y - 1, t.p);
+    add(t.x, t.y + 1, t.p);
 
-    /* add(t.x-1, t.y-1, t.p); */
-    /* add(t.x+1, t.y+1, t.p); */
-    /* add(t.x-1, t.y+1, t.p); */
-    /* add(t.x+1, t.y-1, t.p); */
-   
-    i++;
+    /* // Square */
+    /* if (m[t.x - 1][t.y] != -1 && m[t.x][t.y - 1] != -1) */
+    /*   add(t.x - 1, t.y - 1, t.p); */
+    /* if (m[t.x + 1][t.y] != -1 && m[t.x][t.y + 1] != -1) */
+    /*   add(t.x + 1, t.y + 1, t.p); */
+    /* if (m[t.x - 1][t.y] != -1 && m[t.x][t.y + 1] != -1) */
+    /*   add(t.x - 1, t.y + 1, t.p); */
+    /* if (m[t.x + 1][t.y] != -1 && m[t.x][t.y - 1] != -1) */
+    /*   add(t.x + 1, t.y - 1, t.p); */
   }
-  
+
   printX();
 
   return 0;
