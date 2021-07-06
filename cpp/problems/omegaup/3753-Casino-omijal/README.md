@@ -1,0 +1,1 @@
+https://omegaup.com/arena/problem/Casino-omijal/#problems

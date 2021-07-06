@@ -1,0 +1,1 @@
+https://omegaup.com/arena/problem/A-revorujar-palabras
