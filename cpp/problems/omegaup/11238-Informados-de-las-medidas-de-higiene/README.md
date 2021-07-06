@@ -1,0 +1,1 @@
+https://omegaup.com/arena/problem/Informados-de-las-medidas-de-hig/
