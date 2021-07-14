@@ -1,18 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-long long int n, c, i, j, t, r=1, m, a, b;
-vector <long long int> x[105];
+int n, c, i, j, t, r=1, m, a, b;
+vector <int> x[105];
 string s;
 
-int busqueda(vector <long long int> y, long long k){
-    a = 0; b = y.size()-1;
-    while(a != b){
-        m = (a+b)/2;
-        if( y[m] < k ) a = m+1;
-        else b = m;
+int busqueda(vector <int> y, int k){
+    long long ini = 0, fin = y.size()-1;
+    if( k < y[ini] ) return -1;
+    if( k > y[fin] ) return -1;
+    while(ini != fin){
+        m = (ini+fin)/2;
+        if( y[m] < k ) ini = m+1;
+        else fin = m;
     } 
-    return a;
+    return ini;
 }
 
 int main(){
@@ -35,16 +37,19 @@ int main(){
                 printf("\n");
             }
         }
-        printf("\n");
 
         cin >> c >> i >> j;
+        printf("Buqueda en %d: %d a %d\n", c,  i, j);
         c--;
-        printf("Buqueda: %lld a %lld\n", i, j);
-        a = busqueda(x[c], i-1);
+        a = busqueda(x[c], i);
         b = busqueda(x[c], j);
+        if( x[c][b] > j ) b--;
+        printf("[%d, %d]\n", a, b);
 
-        printf("[%lld, %lld]\n", a, b);
-        printf("R: %lld\n", b-a);
+        int r = x[c][b];
+        if( a != -1 && a < b ) r -= x[c][a];
+        if( a == b ) r --;
+        printf("R: %d\n", r);
         cout << b-a << "\n";
 
     }
