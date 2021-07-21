@@ -1,3 +1,23 @@
+# Wakatime Data Downloader
+
+Download last 14 days data from your wakatime account in JSON format
+
+Get daily summaries of:
+
+- Categories
+- Dependencies
+- Editors
+- Languages
+- Machines
+- Operative systems
+- Projects
+- Total
+
+## Usage
+
+Just copy the following snippet in your browser console in devtools
+
+```js
 // By: Jorge Arreola
 // ~ https://github.com/JorgeArreolaS/coding-notebook/tree/main/devtools-snippets/wakatimeDownloader
 
@@ -27,3 +47,15 @@
     e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
     a.dispatchEvent(e)
 })()
+```
+
+Choose your destination folder to download, download, and done.
+
+### Example
+
+<img src="https://i.imgur.com/RZR51oM.png"/>
+
+## Notes
+
+- You have to be logged in with your account
+- The script dont handle conections or date errors, hope you could solve by yourself if something happends
