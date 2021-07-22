@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+#define BLA "\u001b[30m"
+#define RED "\u001b[31m"
+#define GRE "\u001b[32m"
+#define YEL "\u001b[33m"
+#define BLU "\u001b[34m"
+#define MAG "\u001b[35m"
+#define CYA "\u001b[36m"
+#define WHI "\u001b[37m"
+#define RES "\u001b[0m"
+#define BRI_BLA "\u001b[30;1m"
+#define BRI_RED "\u001b[31;1m"
+#define BRI_GRE "\u001b[32;1m"
+#define BRI_YEL "\u001b[33;1m"
+#define BRI_BLU "\u001b[34;1m"
+#define BRI_MAG "\u001b[35;1m"
+#define BRI_CYA "\u001b[36;1m"
+#define BRI_WHI "\u001b[37;1m"
+#define BG_BLA "\u001b[40m"
+#define BG_RED "\u001b[41m"
+#define BG_GRE "\u001b[42m"
+#define BG_YEL "\u001b[43m"
+#define BG_BLU "\u001b[44m"
+#define BG_MAG "\u001b[45m"
+#define BG_CYA "\u001b[46m"
+#define BG_WHI "\u001b[47m"
+#define BG_BRI_BLA "\u001b[40;1m"
+#define BG_BRI_RED "\u001b[41;1m"
+#define BG_BRI_GRE "\u001b[42;1m"
+#define BG_BRI_YEL "\u001b[43;1m"
+#define BG_BRI_BLU "\u001b[44;1m"
+#define BG_BRI_MAG "\u001b[45;1m"
+#define BG_BRI_CYA "\u001b[46;1m"
+#define BG_BRI_WHI "\u001b[47;1m"
+#define RES "\u001b[0m"
+#define BOL "\u001b[1m"
+#define UND "\u001b[4m"
+#define REV "\u001b[7m"
+
+int main(){
+  cout  << GRE << "Hello " 
+        << YEL << BOL << "word!" << RES << " "
+        << BG_BRI_RED << GRE << "follow me on" << RES << " "
+        << UND << BOL << BRI_GRE << "github" << RES << " ✨️" << endl;
+}
+

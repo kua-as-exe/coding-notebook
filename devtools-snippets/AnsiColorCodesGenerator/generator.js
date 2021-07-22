@@ -1,5 +1,5 @@
 // Terminal colors ANSI escape codes generator
-
+// Updates: ~ https://github.com/JorgeArreolaS/coding-notebook/edit/main/devtools-snippets/AnsiColorCodesGenerator
 // Reference: ~ https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#colors
 
 let rawColors =`
@@ -11,7 +11,6 @@ Blue: \u001b[34m
 Magenta: \u001b[35m
 Cyan: \u001b[36m
 White: \u001b[37m
-Reset: \u001b[0m
 
 Bright Black: \u001b[30;1m
 Bright Red: \u001b[31;1m
@@ -56,27 +55,26 @@ let colors = rawColors.filter(t => !!t).map( t => {
         .join("_");
 
     code = code.trim();
+    code = "\\u001b"+code.slice(1)
     return {name, code, fullName};
 });
-//console.log(colors)
+console.log(colors)
 
 let getColors = ( parseFunc = (_name="", _code="") =>{} ) => {
     let text = colors.map( 
         ({name, code}) => parseFunc(name, code)
     ).join("\n");
 
-    // Prevent devtools terminal to interpret as colors
-    let escape = (s = "") => s.replace(/[\\[\]]/g, '\\$&');
-    console.log(escape(text));
+    console.log(text);
 
     if(copy) {
         copy(text); // handle copy on devtools
-        console.log("Text copied to clipboard");
+        console.log("~ Copied to clipboard ~ ");
     }
 }
 
-// // Parse to .cpp "#define" format
 // getColors( (name, code) => {
-//     return `#define ${name} "${code}"`
+// ~ ERRASE THIS LINE AND THE FOLLOWING CODE AND MAKE OWN ~ 
+//    return `#define ${name} "${code}"`
 // })
 
