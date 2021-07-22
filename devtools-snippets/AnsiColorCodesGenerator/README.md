@@ -2,17 +2,64 @@
 
 If you want to manage terminal colors by your own (without libraries like [chalk](https://www.npmjs.com/package/chalk) in nodejs or [colored](https://pypi.org/project/colored/) in python), or you didn't find any library to do it (as mi with cpp), this script can generate a list of colors to define in your preferred syntax language.
 
+<p align="center">
+    <img src="https://i.imgur.com/WBOrlLi.png"/><br/>
+    <span><small><i>Example in c++ [ Top panel: c++ file / Bottom panel: output terminal from file ]</i></small></span>
+</p>
+
 You can find more information about ANSI color codes in [Build your own Command Line with ANSI escape codes](https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#colors)  
 
-I nedded this in cpp, but i'm too lazy to write it by hand in 2 minutes. So I spent half an hour to do this script that do it automatically for you :)
+> I nedded this in c++, but i'm too lazy to write it by hand in 2 minutes. So I spent 1 hour and a half to do this script that do it automatically. Now for you :)
 
 ## Usage
 
-Copy the following code to your web browser console
+Copy the below code to your web browser console and call the function to generate your colors list like the following steps:
+
+## Generate the code
+
+Use the function `getColors` and send a function that get 2 arguments: `name` and `code`. `name` is the color's prefix name (for example, to be stored in a variable), and `code` is the string color code to be used as an assigment. You must return a string inside the template string (the ``` `blabla ${variable} moreBla ${anotherVariable} end` ``` thing).
+
+### Examples:
+
+Parse to c++ `#define x ""` format
+```js
+getColors( (name, code) => {
+    return `#define ${name} "${code}"`
+})
+```
+Parse to c++ `string x = ""` format
+```js
+getColors( (name, code) => {
+    return `string ${name} = "${code}";`
+})
+```
+
+Parse to javascript `const x = ""` format
+```js
+getColors( (name, code) => {
+    return `const ${name} = "${code}"`
+})
+```
+
+Parse to javascript `let x = ""` format
+```js
+getColors( (name, code) => {
+    return `let ${name} = "${code}"`
+})
+```
+
+Parse to python `x = ""` format
+```js
+getColors( (name, code) => {
+    return `${name} = "${code}"`
+})
+```
+
+## Code to copy
 
 ```js
 // Terminal colors ANSI escape codes generator
-
+// Updates: ~ https://github.com/JorgeArreolaS/coding-notebook/edit/main/devtools-snippets/AnsiColorCodesGenerator
 // Reference: ~ https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html#colors
 
 let rawColors =`
@@ -24,7 +71,6 @@ Blue: \u001b[34m
 Magenta: \u001b[35m
 Cyan: \u001b[36m
 White: \u001b[37m
-Reset: \u001b[0m
 
 Bright Black: \u001b[30;1m
 Bright Red: \u001b[31;1m
@@ -69,6 +115,7 @@ let colors = rawColors.filter(t => !!t).map( t => {
         .join("_");
 
     code = code.trim();
+    code = "\\u001b"+code.slice(1)
     return {name, code, fullName};
 });
 console.log(colors)
@@ -78,57 +125,16 @@ let getColors = ( parseFunc = (_name="", _code="") =>{} ) => {
         ({name, code}) => parseFunc(name, code)
     ).join("\n");
 
-    // Prevent devtools terminal to interpret as colors
-    let escape = (s = "") => s.replace(/[\\[\]]/g, '\\$&');
-    console.log(escape(text));
+    console.log(text);
 
     if(copy) {
         copy(text); // handle copy on devtools
-        console.log("Text copied to clipboard");
+        console.log("~ Copied to clipboard ~ ");
     }
 }
 
-```
-
-## Generate the code
-
-Use the function `getColors` and send a function that get 2 arguments: `name` and `code`. `name` is the color's prefix name (for example, to be stored in a variable), and `code` is the string color code to be used as an assigment. You must return a string
-
-Example:
-
-```js
-// Parse to c++ "#define" format
-getColors( (name, code) => {
-    return `#define ${name} "${code}"`
-})
-```
-
-```js
-// Parse to c++ "string x = "" " format
-getColors( (name, code) => {
-    return `string ${name} = "${code}"`
-})
-```
-
-
-```js
-// Parse to javascript " const x = "" " format
-getColors( (name, code) => {
-    return `const ${name} = "${code}"`
-})
-```
-
-```js
-// Parse to javascript " let x = "" " format
-getColors( (name, code) => {
-    return `let ${name} = "${code}"`
-})
-```
-
-
-```js
-// Parse to python " x = "" " format
-getColors( (name, code) => {
-    return `${name} = "${code}"`
-})
+// getColors( (name, code) => {
+// ~ ERRASE THIS LINE AND THE FOLLOWING CODE AND MAKE OWN ~ 
+//    return `#define ${name} "${code}"`
+// })
 ```
