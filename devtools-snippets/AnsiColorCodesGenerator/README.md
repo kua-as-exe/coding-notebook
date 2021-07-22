@@ -2,6 +2,8 @@
 
 If you want to manage terminal colors by your own (without libraries like [chalk](https://www.npmjs.com/package/chalk) in nodejs or [colored](https://pypi.org/project/colored/) in python), or you didn't find any library to do it (as mi with cpp), this script can generate a list of colors to define in your preferred syntax language.
 
+This script will generate a list with almost the most common colors to use in your terminal. This list could be a bunch of variables that you could copy and paste everywere you want and use the colors as variables on print functions.
+
 <p align="center">
     <img src="https://i.imgur.com/WBOrlLi.png"/><br/>
     <span><small><i>Example in c++ [ Top panel: c++ file / Bottom panel: output terminal from file ]</i></small></span>
