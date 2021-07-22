@@ -1,1 +1,0 @@
-https://omegaup.com/arena/problem/Evaluando-una-formula-gigante/

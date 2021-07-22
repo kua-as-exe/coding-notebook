@@ -1,4 +1,4 @@
-
+# AC
 def sikiniano(t):
   l = len(t)
   if l == 1 : return t
