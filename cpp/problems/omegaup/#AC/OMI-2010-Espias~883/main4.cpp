@@ -5,8 +5,7 @@
 #include <stack>
 using namespace std;
 
-bool debug = false;
-#define DEBUG if(debug)
+#define DEBUG if( false )
 
 struct node {
   int to;
@@ -14,7 +13,7 @@ struct node {
   bool visited = false;
 };
 
-node nodes[1000000];
+node nodes[1000010];
 
 stack<int> q_nodes;
 

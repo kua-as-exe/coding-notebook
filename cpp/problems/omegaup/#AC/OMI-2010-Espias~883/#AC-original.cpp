@@ -1,12 +1,10 @@
+// 2.69s	
 #include <iostream>
 #include <stdio.h>
-#include <vector>
-#include <queue>
 #include <stack>
 using namespace std;
 
-bool debug = true;
-#define DEBUG if(debug)
+#define DEBUG if( false )
 
 struct node {
   int to;
@@ -14,22 +12,17 @@ struct node {
   bool visited = false;
 };
 
-node nodes[1000000];
+// node nodes[1000000]; <- PROBLEMA ~ Mal cálculo de espacio
+node nodes[1000010];
 
 stack<int> q_nodes;
-
-void printQ( stack<int> qt ){
-  printf("[ ");
-  while( !qt.empty() ){
-    printf( "%d ,", qt.top() );
-    qt.pop();
-  }
-  printf("]\n");
-}
-
 int main(){
+  std::cin.tie(nullptr);
+  std::ios_base::sync_with_stdio(false);
+
   int e, t; cin >> e;
   for(int i = 1; i <= e; i++){
+    // PROBLEMA ~ Como la entrada es muy grande, al tener doble asignación se exede el tiempo límite, quedó arreglado con cin.tie(0)
     cin >> t;
     nodes[i] = {t};
   }
@@ -51,35 +44,18 @@ int main(){
           nodes[current].visited = true; 
           if( nodes[ nodes[current].to ].steps == 0 ){
             DEBUG printf("found cicle: %d\n", nodes[current].to);
-            stack <int> q2; int len;
 
-            DEBUG printf("Before 0\n");
-            DEBUG printf("Current: %d\n", current);
-            /* DEBUG printQ(q_nodes); */
-            /* DEBUG printQ(q2); */
+            int len = 1;
+            for( int temp = nodes[ current ].to; temp != current; len++){
+              DEBUG printf("%d \n", nodes[temp].to);
+              temp = nodes[temp].to;
+            }
+            DEBUG printf("len: %d\n", len);
 
-            DEBUG printf("Before 1, q_nodes: %d\n", (int)q_nodes.size());
-            for( len = 1; !q_nodes.empty() && nodes[current].to != q_nodes.top(); len++ ){
-              printf("pre\n");
-              q2.push( q_nodes.top() ); 
-              printf(" - %d: %d (%d)\n", len, (int)q_nodes.top(), (int)q_nodes.size() );
+            for( int j = 0; j < len; j++ ){
+              nodes[ q_nodes.top() ].steps = len;
               q_nodes.pop();
-              printf("pos\n");
-              printf("Next: %d & %d\n", nodes[current].to, q_nodes.top());
-              printf("ready\n");
             }
-            q2.push( q_nodes.top() ); q_nodes.pop();
-            DEBUG printf("After 1\n");
-
-            /* DEBUG printQ(q_nodes); */
-            DEBUG printf("Before 2\n");
-            DEBUG printQ(q2);
-            DEBUG printf(" len: %d\n", len);
-            while( !q2.empty() ){
-              nodes[ q2.top() ].steps = len;
-              q2.pop();
-            }
-            DEBUG printf("After 2\n");
             break;
 
           }
