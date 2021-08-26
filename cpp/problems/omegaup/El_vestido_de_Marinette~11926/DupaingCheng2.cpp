@@ -69,6 +69,7 @@ void bfs(int x, int y){
   add(x, y, 1);
 
   while ( !nodes.empty() && valid ) {
+
     node f = nodes.front();
     DEBUG printf("Front: %d, %d p:%d\n", f.x, f.y, f.p );
     nodes.pop();
