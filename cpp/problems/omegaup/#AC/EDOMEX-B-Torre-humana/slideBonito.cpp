@@ -30,6 +30,7 @@ int main(){
         for( int a = i; a <= j; a++ )
           if( w_list[a] > maxW )
             maxW = w_list[a];
+
         if ( minMaxW == 0 || maxW < minMaxW ) 
           minMaxW = maxW;
 
