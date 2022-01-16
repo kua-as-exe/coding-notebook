@@ -10,3 +10,20 @@ const findLogo = async query => {
   console.log(icons.slice(0, 5).join('\n'));
   return icons;
 };
+
+const run = query => {
+  const copy = e => {
+    console.log(e.target.src);
+    navigator.clipboard.writeText(e.target.src);
+  };
+
+  const addImg = src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.addEventListener('click', copy);
+    document.body.append(img);
+  };
+
+  document.body.innerHTML = `<style> img { width: 100px; margin: 5px;} </style>`;
+  findLogo(query).then(logos => logos.forEach(addImg));
+};
